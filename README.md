@@ -1,1 +1,1 @@
-# RxJavaCode
+Coding exercises to learn RxJava
