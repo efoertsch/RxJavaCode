@@ -1,0 +1,19 @@
+// see https://android.jlelse.eu/how-to-use-android-studio-to-write-pure-java-23cbe49186e8
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+
+}
+
+dependencies {
+
+    compile 'io.reactivex:rxjava:1.2.9'
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
