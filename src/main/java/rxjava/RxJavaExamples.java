@@ -1,24 +1,29 @@
 package rxjava;
 
+
+
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-// Coding exercise to learn RxJava
-// Code from
-// http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/
-// and
-//  Reactive Programming with RxJava
+/** Coding exercise to learn RxJava
+* Code from
+* http://blog.danlew.net/2014/09/15/grokking-rxjava-part-1/
+* and
+*  Reactive Programming with RxJava
+ */
 
-public class RxJavaTest {
+public class RxJavaExamples {
 
 
     public static void main(String[] arg) {
 
-
-        example4();
+        example5();
+        //example4();
         //example3b();
         //example3a();
         //example3("Eric");
@@ -32,6 +37,39 @@ public class RxJavaTest {
 
     }
 
+
+    // using a timer
+    private static void example5(){
+        Observable observable = Observable.timer(1, TimeUnit.SECONDS);
+        Subscriber<Long> subscriber = new Subscriber<Long>(){
+            @Override
+            public void onCompleted() {
+                System.out.println("onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                System.out.println(e.toString());
+            }
+
+            @Override
+            public void onNext(Long value) {
+                System.out.println("Got value:" + value);
+            }
+        };
+
+        observable.subscribe(subscriber);
+
+        // put in sleep to allow observable thread to call onNext and see result in output
+        // w/o sleep, method will end immediately and you won't see the onNext call
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("method completed");
+
+    }
 
     // Observable checks if subscriber has unsubscribed before emitting value
     private static void example4() {
@@ -50,7 +88,7 @@ public class RxJavaTest {
             public void onNext(Integer i) {
                 System.out.println("Number: "+ i);
                 if (i > 5) {
-                    unsubscribe();  // Unsubscribe of coarse!
+                    unsubscribe();  // Unsubscribe of course!
                 }
             }
             @Override
